@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>https://saophaixoan.net</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <style>
+        .list-option li {
+      margin: 20px 0px;
+      list-style: none;
+    }
+    .list-option li a {
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      font-size: 30px;
+    }
+    .side-bar {
+      background-color: rgb(173, 170, 170);
+      height: 1000px;
+    }
+    main {
+      margin-top: 30px;
+      height: 1000px;
+      /* background-color: aqua; */
+    }
+    .main-body {
+      margin-top: 20px;
+    }
+    th {
+      width: 150px;
+    }
+  </style>
+
+  <body>
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Home</a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                <form class="d-flex">
+                  <input
+                    class="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                  <button class="btn btn-outline-success" type="submit">
+                    Search
+                  </button>
+                </form>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-lg-2">
+            <div class="side-bar">
+              <ul class="list-option">
+                <li><a href="">Sản Phẩm</a></li>
+                <li><a href="">Danh mục</a></li>
+                <li><a href="">Giỏ Hàng</a></li>
+                <li><a href="">Anthor</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col col-lg-10">
+            <div class="main-body">
+               <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">ID</label>
+                    <input type="text" name="id" class="form-control" id="exampleFormControlInput1" placeholder="">
+               </div>
+               <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Name</label>
+                    <input type="text" name="submenu-categoty" class="form-control" id="exampleFormControlInput1" placeholder="">
+               </div>
+               <button class="btn btn-success" type="button" onclick="SaveUpdate()">Save</button>
+                  
+
+
+
+
+
+
+
+
+              <!-- <form id="form_edit" action="">
+                <input type="text" name="id" /> <br />
+                <input type="text" name="submenu-categoty" placeholder="" />
+                <br />
+                <button type="button" onclick="SaveUpdate()">Save</button>
+              </form>
+
+              <button class="btn btn-danger">
+                <a style="color: aliceblue; text-decoration: none" href=""
+                  >THÊM</a
+                >
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+  <!-- =============================================== -->
+  <body>
+    <form id="form_edit" action="">
+      <input type="text" name="id" /> <br />
+      <input type="text" name="submenu-categoty" placeholder="" /> <br />
+      <button type="button" onclick="SaveUpdate()">Save</button>
+    </form>
+    <br /><br />
+    <!-- <table id="ds-u" border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Action</th>
+            
+        </tr>
+    </table> -->
+    <script>
+      var url = "http://localhost:3000/submenu-category";
+
+      fetch(url, {
+        method: "GET",
+      })
+        .then(function (res) {
+          return res.json(); // chuyển chuỗi nhận được thành đối tượng json
+        })
+        .then(function (data) {
+          // các lệnh xử lý cho dữ liệu ở đây: các công việc hiển thị.
+          console.log(data);
+
+          //duyệt mảng và tạo các element cho vào bảng
+
+          var bang = document.querySelector("#ds-u");
+          for (i = 0; i < data.length; i++) {
+            var obj = data[i];
+            // Tạo thêm 1 dòng ở cuối bảng bằng cú pháp sau
+            let dong_moi = bang.insertRow(-1);
+
+            // Thêm ô thứ nhất, chỉ số thứ tự là 0, ô này dùng để hiển thị ID
+            let o1 = dong_moi.insertCell(0);
+            o1.innerText = obj.id;
+
+            // Thêm ô thứ hai, chỉ số thứ tự là 1, ô này dùng để hiển thị sub-name
+            let o2 = dong_moi.insertCell(1);
+            o2.innerText = obj.name;
+            // Thêm ô thứ ba, chỉ số thứ tự là 2, ô này dùng để hiển thị nút bấm sửa và xóa
+            let o5 = dong_moi.insertCell(2);
+            // tạo nút bấm xóa:
+            var btn_xoa = document.createElement("button");
+            btn_xoa.setAttribute("type", "button");
+            btn_xoa.innerText = "Xóa";
+            btn_xoa.setAttribute("onclick", "DeleteRow(" + obj.id + ")"); // truyền vào id user
+            o5.appendChild(btn_xoa);
+
+            var btn_sua = document.createElement("button");
+            btn_sua.setAttribute("type", "button");
+            btn_sua.innerText = "Sua";
+            btn_sua.setAttribute("onclick", "EditRow(" + obj.id + ")"); // truyền vào id user
+            o5.appendChild(btn_sua);
+          }
+        });
+
+      //    function DeleteRow(id) {
+      //        let url_delete = 'http://localhost:3000/submenu-category/' + id;
+      //        fetch(url_delete, {
+      //            method: "DELETE"
+      //        }).then(function(res) {
+      //            return res.json(); // chuyển chuỗi nhận được thành đối tượng json
+      //        }).then(function(data) {
+      //            // các lệnh xử lý cho dữ liệu ở đây: các công việc hiển thị.
+      //            // console.log(data);
+      //            location.reload();
+      //        });
+      //    }
+
+      function EditRow(id) {
+        console.log("Edit row " + id);
+        // hàm này có chức năng lấy thông tin bản ghi và hiện lên form.
+        // vì nhiều khi danh sách không hiển thị hết thông tin của bản ghi nên phải load lại từ server.
+
+        let url_delete = "http://localhost:3000/submenu-category/" + id;
+
+        fetch(url_delete, {
+          method: "GET", // dùng phương thức get để lấy thông tin
+        })
+          .then(function (res) {
+            return res.json(); // chuyển chuỗi nhận được thành đối tượng json
+          })
+          .then(function (data) {
+            // các lệnh xử lý cho dữ liệu ở đây: các công việc hiển thị.
+            console.log(data);
+            // tham số data lúc này sẽ là một đối tượng, ta sẽ sử dụng theo cách dùng của đối tượng: Tên.THuộc tính
+
+            // thực hiện gắn dữ liệu lên form
+            // <input type="text" name="username" placeholder="Nhập username" /> <br>
+            // <input type="text" name="fullname" placeholder="Nhập họ tên" /> <br>
+            // <input type="text" name="email" placeholder="Nhập email" />
+
+            document.querySelector("input[name=id]").value = data.id;
+            document.querySelector("input[name=submenu-categoty]").value =
+              data.name;
+
+            //ngoài ra bạn cần giữ lại id để làm căn cứ gửi dữ liệu lên, có thể là thêm 1 thẻ hidden hoặc gắn luôn vào 1 thuộc tính của thẻ form
+            document.querySelector("#form_edit").setAttribute("id_edit", id); // tôi gắn luôn vào thẻ form cho nhanh
+
+            document.querySelector("#form_edit").style.display = "block";
+            // ok giờ đợi người dùng sửa và bấm nút cập nhật.
+          });
+      }
+
+      // khi admin đã lây được dữ liệu bản ghi cần sửa và ấn nút lưu sửa
+      function SaveUpdate() {
+        //1. Lấy dữ liệu
+        var id = document.querySelector("input[name=id]").value;
+        var submenu = document.querySelector(
+          "input[name=submenu-categoty]"
+        ).value;
+
+        //2. kiểm tra hợp lệ
+        if (id.length == 0) {
+          alert("Bạn cần nhập id");
+          return false;
+        }
+        // bạn làm tiếp các kiểm tra khác ở đây
+
+        ///......
+
+        //3. Gửi dữ liệu lên server
+        // trước hết là tạo đối tượng để cài dữ liệu vào
+        //
+        var dataPost = {
+          id: id,
+          name: submenu,
+        };
+
+        // lấy id bản ghi cần sửa để cho vào url:
+        var id_edit = document
+          .querySelector("#form_edit")
+          .getAttribute("id_edit");
+
+        var url_post = "http://localhost:3000/submenu-category/" + id_edit; // nối vào url để cho hợp lệ.
+
+        fetch(url_post, {
+          method: "PATCH", // sửa thì dùng phương thức PATCH
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataPost), // chuyển dữ liệu object trên thành chuỗi json
+        })
+          .then((response) => response.json()) // chuyển kết quả trả về thành json object
+          .then((data) => {
+            // bạn có thể làm gì đó với kết quả cuối cùng này thì làm
+
+            console.log("Success:", data); // ghi log kết quả hoàn thành
+
+            if (data.id == id_edit) {
+              alert("Đã cập nhật thành công");
+              // xóa rỗng các ô textbox ở form
+              document.querySelector("input[name=id]").value = "";
+              document.querySelector("input[name=submenu-categoty]").value = "";
+
+              document.querySelector("#form_edit").removeAttribute("id_edit"); // xóa cả cái id vừa gắn vào
+              location.reload();
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error); // ghi log nếu xảy ra lỗi
+          });
+      }
+    </script>
+  </body>
+</html>

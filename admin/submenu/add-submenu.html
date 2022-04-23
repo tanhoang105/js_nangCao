@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <form action="">
+        <!-- <input type="text" name="id" placeholder="Nhập id" /> <br> -->
+        <input type="text" name="submenu-categoty" placeholder="" /> <br>
+        <button type="button" onclick="SaveNew()">Save</button>
+    </form>
+
+<script>
+    function SaveNew(){
+        //lấy dữ liệu từ form 
+        // var i = document.querySelector("input[name=id]").value;
+        var sub = document.querySelector("input[name=submenu-categoty]").value;
+        console.log(sub);
+
+        // Kiểm tra hợp lệ
+        // if (i.length == 0) {
+        //         alert('Bạn cần nhập ');id
+        //         return false;
+        // }
+        // gửi dữ liệu lên server 
+        option_axios = {
+            url : 'http://localhost:3000/submenu-category', // link file mà muốn thêm
+            method:'POST', // thêm mới
+            data:{
+                id:i,
+                name:sub
+               
+            }
+        }
+        // gọi hàm axios để thực thi
+        axios(option_axios)
+        .then(function(res){
+            console.log(res);
+            if(res.status == 201)
+                alert("Thêm mới thành công")
+        })
+        .catch(function (ex){
+            console.log(ex);
+        }); 
+
+        return false;
+    }
+
+
+</script>
+
+
+</body>
+</html>
